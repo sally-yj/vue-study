@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <router-link to="/login">로그인</router-link>
+        <router-link to="/">메인</router-link>
+      </div>
+      <router-view></router-view>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script>
+      const LoginComponent = {
+        template: '<div>login</div>',
+      };
+
+      const MainComponent = {
+        template: '<div>main</div>',
+      };
+
+      const router = new VueRouter({
+        mode: 'history', // 해쉬 값 제거 (# 사라짐)
+        routes: [
+          {
+            path: '/login',
+            component: LoginComponent,
+          },
+          {
+            path: '/',
+            component: MainComponent,
+          },
+        ],
+      });
+
+      new Vue({
+        el: '#app',
+        router: router,
+      });
+    </script>
+  </body>
+</html>

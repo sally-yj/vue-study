@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <app-header @pass="logText"></app-header>
+      <app-header v-on:pass="logText"></app-header>
+      <app-content @addone="add" :number="num"></app-content>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const appHeader = {
+        template: '<button @click="passEvent">click me!</button>',
+        methods: {
+          passEvent: function () {
+            this.$emit('pass'); // 1. pass 라는 이벤트 발생시킨다.
+            // 2. html 태그쪽에서 pass를 보고있다가, pass이벤트가 발생하면 logText를 실행한다.
+          },
+        },
+      };
+
+      const appContent = {
+        template:
+          '<div><button @click="addNumber">add</button><p>{{number}}</p></div>',
+        props: ['number'],
+        methods: {
+          addNumber: function () {
+            this.$emit('addone'); // 참고로, html 태그에 들어가는 @이벤트 이름에는 대문자가 들어올 수 없다.
+            console.log('addNumber 실행');
+          },
+        },
+      };
+
+      new Vue({
+        el: '#app',
+        components: {
+          'app-header': appHeader,
+          'app-content': appContent,
+        },
+        methods: {
+          logText: function () {
+            console.log('log text!!');
+          },
+          add: function () {
+            this.num = this.num + 1;
+            console.log('aa!!!');
+          },
+        },
+        data: {
+          num: 10,
+        },
+      });
+    </script>
+  </body>
+</html>
